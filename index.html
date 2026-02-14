@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BLYND — Unseen. Unstoppable.</title>
+  <meta name="description" content="BLYND — a Nike‑inspired advanced shoe brand website with premium UI/UX, product showrooms, smooth animations, and lightning performance." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --panel: #0f1422;
+      --card: #121a2d;
+      --muted: #9aa6bf;
+      --text: #e8ecf5;
+      --accent: #5ec6ff; /* electric blue */
+      --accent-2: #5ef3cd; /* neon mint */
+      --danger: #ff5678;
+      --radius: 18px;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text); background: radial-gradient(1200px 600px at 20% -10%, rgba(94,198,255,.12), transparent 60%), radial-gradient(1200px 700px at 100% 10%, rgba(94,243,205,.10), transparent 50%), var(--bg);
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1200px; margin:0 auto; padding:0 20px}
+
+    /* NAV */
+    .nav{position:sticky; top:0; z-index:60; backdrop-filter:saturate(160%) blur(10px); background:rgba(10,13,20,.65); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:.3px}
+    .logo{width:32px; height:32px; border-radius:10px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); display:grid; place-items:center; color:#08101c; font-weight:900; box-shadow:var(--shadow)}
+    .nav-links{display:flex; gap:20px; align-items:center}
+    .nav-links a{opacity:.92}
+    .pill{padding:10px 16px; border-radius:12px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#08101c; font-weight:800; box-shadow:var(--shadow)}
+    .menu-btn{display:none}
+
+    /* HERO */
+    header{padding:80px 0 40px}
+    .hero{display:grid; grid-template-columns:1.2fr .8fr; gap:30px; align-items:center}
+    .eyebrow{display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background:rgba(94,198,255,.12); border:1px solid rgba(94,198,255,.45); color:var(--accent); font-weight:800}
+    h1{font-size:56px; line-height:1.02; margin:14px 0}
+    .sub{color:var(--muted); font-size:18px}
+    .cta-row{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+    .btn{padding:12px 18px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:#0f1628; color:var(--text); font-weight:800}
+    .btn.primary{background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#08101c; border:none}
+    .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:24px}
+    .stat{padding:14px; text-align:center; background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:14px}
+    .stat b{font-size:22px}
+
+    .hero-card{background:linear-gradient(180deg, #121a2d 0%, #0e1526 100%); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; position:relative}
+    .badge-bar{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .tag{display:inline-block; padding:6px 10px; border-radius:10px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:#cfe4ff; font-weight:700; font-size:12px}
+
+    /* SECTIONS */
+    section{padding:80px 0}
+    h2{font-size:36px; margin:0 0 8px}
+    p.lead{color:var(--muted); margin:0 0 24px}
+
+    /* FEATURES */
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .card{padding:20px; border-radius:16px; background:var(--card); border:1px solid rgba(255,255,255,.06); box-shadow:var(--shadow)}
+    .feature{display:flex; gap:14px}
+    .icon{min-width:46px; height:46px; border-radius:12px; display:grid; place-items:center; background:rgba(94,198,255,.12); border:1px solid rgba(94,198,255,.35); font-size:22px}
+
+    /* PRODUCTS */
+    .products{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
+    .product{position:relative; overflow:hidden}
+    .product .imgwrap{position:relative; aspect-ratio: 4/3; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.06)}
+    .product img{width:100%; height:100%; object-fit:cover; transform:scale(1.02); transition:transform .5s ease}
+    .product:hover img{transform:scale(1.08)}
+    .product .meta{display:flex; justify-content:space-between; align-items:center; margin-top:10px}
+    .price{font-weight:900; font-size:18px}
+    .chip{font-size:12px; color:var(--muted)}
+    .quick{position:absolute; inset:auto 12px 12px 12px; display:flex; gap:10px; transform:translateY(12px); opacity:0; transition:all .25s ease}
+    .product:hover .quick{transform:none; opacity:1}
+
+    /* MARQUEE */
+    .marquee{overflow:hidden; border-top:1px solid rgba(255,255,255,.06); border-bottom:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.02)}
+    .marquee-inner{display:flex; gap:40px; white-space:nowrap; animation:scroll 22s linear infinite}
+    .marquee-inner b{opacity:.9}
+    @keyframes scroll{from{transform:translateX(0)} to{transform:translateX(-50%)}}
+
+    /* CTA / SIGNUP */
+    .cta{display:grid; grid-template-columns:1.1fr .9fr; gap:18px; align-items:center}
+    input, textarea{width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:#0f1628; color:var(--text)}
+    textarea{min-height:110px; resize:vertical}
+
+    /* FOOTER */
+    footer{padding:28px 0; color:var(--muted); border-top:1px solid rgba(255,255,255,.06)}
+
+    /* RESPONSIVE */
+    @media (max-width: 1000px){
+      .hero{grid-template-columns:1fr}
+      .cta{grid-template-columns:1fr}
+      .products{grid-template-columns:repeat(2,1fr)}
+      .grid-3{grid-template-columns:1fr}
+      .menu-btn{display:inline-flex}
+      .nav-links{position:fixed; inset:64px 12px auto 12px; background:rgba(15,20,34,.98); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px; flex-direction:column; gap:12px; display:none}
+      .nav-links.open{display:flex}
+    }
+
+
+    /* ===== VIT-AP Academic Header ===== */
+.vit-header {
+  background: #800000;
+  color: white;
+  text-align: center;
+  padding: 14px 10px;
+  border-bottom: 4px solid gold;
+}
+
+.vit-header h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.vit-header p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* ===== Academic Footer Section ===== */
+.academic-footer {
+  background: #111;
+  text-align: center;
+  padding: 25px;
+  border-top: 3px solid #800000;
+  margin-top: 40px;
+}
+
+.academic-footer p {
+  margin: 6px 0;
+  color: #ccc;
+}
+
+.academic-footer strong {
+  color: white;
+}
+
+  </style>
+</head>
+<body>
+  <!-- VIT-AP Header -->
+<div class="vit-header">
+  <h1>Vellore Institute of Technology – Andhra Pradesh (VIT-AP University)</h1>
+  <p>Web Technology Project Submission</p>
+</div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <div class="logo">B</div>
+        <span>BLYND</span>
+      </div>
+      <button class="menu-btn btn" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">Menu</button>
+      <div class="nav-links">
+        <a href="#products">Shop</a>
+        <a href="#features">Tech</a>
+        <a href="#stories">Stories</a>
+        <a href="#contact" class="pill">Join Waitlist</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header>
+    <div class="container hero">
+      <div>
+        <span class="eyebrow">Next‑Gen Performance</span>
+        <h1>Unseen. <span style="color:var(--accent)">Unstoppable.</span></h1>
+        <p class="sub">Engineered foam, micro‑mesh uppers, and velocity plates. BLYND crafts footwear that disappears under your stride—so you can fly.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#products">Shop the drop</a>
+          <a class="btn" href="#features">Explore tech</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>180 g</b><div class="chip">avg. weight</div></div>
+          <div class="stat"><b>4.9★</b><div class="chip">athlete rating</div></div>
+          <div class="stat"><b>+12%</b><div class="chip">energy return</div></div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop" alt="BLYND Vapor X" style="width:100%; border-radius:14px; border:1px solid rgba(255,255,255,.07)">
+        <div class="badge-bar">
+          <span class="tag">Vapor X</span>
+          <span class="tag">Engineered Mesh</span>
+          <span class="tag">Carbon Plate</span>
+          <span class="tag">Limited</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="container">
+      <div class="marquee-inner" aria-hidden="true">
+        <b>ULTRALIGHT • REACTIVE FOAM • AIRFLOW • STABILITY • </b>
+        <b>VAPOR X • PHANTOM PRO • NIGHTRUN • STREETFLOW • </b>
+        <b>ULTRALIGHT • REACTIVE FOAM • AIRFLOW • STABILITY • </b>
+        <b>VAPOR X • PHANTOM PRO • NIGHTRUN • STREETFLOW • </b>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES / TECH -->
+  <section id="features">
+    <div class="container">
+      <h2>Tech that disappears underfoot</h2>
+      <p class="lead">We obsess over grams and geometry. The result? Effortless speed and day‑long comfort.</p>
+      <div class="grid-3">
+        <div class="card feature">
+          <div class="icon">⚡</div>
+          <div>
+            <h3>Reactive Foam</h3>
+            <p>Dual‑density midsole returns energy with every toe‑off while damping heel impact.</p>
+          </div>
+        </div>
+        <div class="card feature">
+          <div class="icon">🪶</div>
+          <div>
+            <h3>Featherweight</h3>
+            <p>Micro‑mesh upper and minimal overlays keep weight down without losing structure.</p>
+          </div>
+        </div>
+        <div class="card feature">
+          <div class="icon">🧭</div>
+          <div>
+            <h3>Stability Geometry</h3>
+            <p>Wider forefoot and rocker profile guide your stride and reduce fatigue.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="container">
+      <h2>Shop the Drop</h2>
+      <p class="lead">Limited releases. When they’re gone, they’re gone.</p>
+      <div class="products" id="productGrid">
+        <!-- Product 1 -->
+        <div class="card product" data-title="Vapor X" data-price="12999">
+          <div class="imgwrap">
+            <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1200&auto=format&fit=crop" alt="BLYND Vapor X" />
+            <div class="quick">
+              <button class="btn primary" onclick="addToCart(this)">Add to Cart</button>
+              <button class="btn" onclick="quickView(this)">Quick View</button>
+            </div>
+          </div>
+          <div class="meta">
+            <div>
+              <div style="font-weight:800">Vapor X</div>
+              <div class="chip">Carbon plate • Mesh</div>
+            </div>
+            <div class="price">₹12,999</div>
+          </div>
+        </div>
+        <!-- Product 2 -->
+        <div class="card product" data-title="Phantom Pro" data-price="14999">
+          <div class="imgwrap">
+            <img src="https://images.unsplash.com/photo-1543508282-6319a3e2621f?q=80&w=1200&auto=format&fit=crop" alt="BLYND Phantom Pro" />
+            <div class="quick">
+              <button class="btn primary" onclick="addToCart(this)">Add to Cart</button>
+              <button class="btn" onclick="quickView(this)">Quick View</button>
+            </div>
+          </div>
+          <div class="meta">
+            <div>
+              <div style="font-weight:800">Phantom Pro</div>
+              <div class="chip">Stability • Rocker</div>
+            </div>
+            <div class="price">₹14,999</div>
+          </div>
+        </div>
+        <!-- Product 3 -->
+        <div class="card product" data-title="NightRun" data-price="9999">
+          <div class="imgwrap">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop" alt="BLYND NightRun" />
+            <div class="quick">
+              <button class="btn primary" onclick="addToCart(this)">Add to Cart</button>
+              <button class="btn" onclick="quickView(this)">Quick View</button>
+            </div>
+          </div>
+          <div class="meta">
+            <div>
+              <div style="font-weight:800">NightRun</div>
+              <div class="chip">Reflective • Urban</div>
+            </div>
+            <div class="price">₹9,999</div>
+          </div>
+        </div>
+        <!-- Product 4 -->
+        <div class="card product" data-title="StreetFlow" data-price="7999">
+          <div class="imgwrap">
+            <img src="https://images.unsplash.com/photo-1528701800489-20be3c2ea35c?q=80&w=1200&auto=format&fit=crop" alt="BLYND StreetFlow" />
+            <div class="quick">
+              <button class="btn primary" onclick="addToCart(this)">Add to Cart</button>
+              <button class="btn" onclick="quickView(this)">Quick View</button>
+            </div>
+          </div>
+          <div class="meta">
+            <div>
+              <div style="font-weight:800">StreetFlow</div>
+              <div class="chip">All‑day • Cushion</div>
+            </div>
+            <div class="price">₹7,999</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORIES / TESTIMONIALS -->
+  <section id="stories">
+    <div class="container">
+      <h2>What athletes say</h2>
+      <div class="grid-3">
+        <div class="card">
+          <p style="font-style:italic">“Vapor X turned my intervals into cruise control.”</p>
+          <div class="chip">— A. Singh, 10K • 31:52</div>
+        </div>
+        <div class="card">
+          <p style="font-style:italic">“The rocker is addictive. Zero hot‑spots even after 25km.”</p>
+          <div class="chip">— N. Rao, Marathoner</div>
+        </div>
+        <div class="card">
+          <p style="font-style:italic">“Light, stable, fast. StreetFlow is my daily go‑to.”</p>
+          <div class="chip">— R. Khan, City Runner</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="card cta">
+        <div>
+          <h2>Join the BLYND waitlist</h2>
+          <p class="lead">Be first to know about drops, sizes, and exclusive colorways.</p>
+          <form onsubmit="handleSubmit(event)">
+            <input type="text" name="name" placeholder="Your name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <textarea name="note" placeholder="Your usual size, colors you love…"></textarea>
+            <div class="cta-row">
+              <button class="btn primary" type="submit">Notify me</button>
+              <span id="formStatus" style="align-self:center; color:var(--muted)"></span>
+            </div>
+          </form>
+        </div>
+        <div class="card" style="background:linear-gradient(180deg,#111a30 0%, #0e1526 100%); border:1px dashed rgba(94,198,255,.35); display:grid; place-items:center; text-align:center">
+          <div>
+            <div style="font-size:42px">👟</div>
+            <p class="lead">Want a full e‑commerce build (cart, checkout, admin)? Add Shopify/Stripe later — this page is ready.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap">
+      <div>© <span id="year"></span> BLYND. All rights reserved.</div>
+      <div style="display:flex; gap:12px">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+  </footer>
+  <!-- Academic Footer -->
+<div class="academic-footer">
+  <p><strong>Submitted to:</strong> VIT-AP University</p>
+  <p><strong>Student Name:</strong> Aditya Yadav</p>
+  <p><strong>Registration Number:</strong> 23BCE8781</p>
+  <p>© 2026 VIT-AP University | Academic Project</p>
+</div>
+
+
+  <!-- QUICK VIEW MODAL -->
+  <dialog id="modal" style="border:none; border-radius:16px; padding:0; width:min(720px, 92vw); background:var(--panel); color:var(--text)">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0">
+      <img id="modalImg" alt="Preview" style="width:100%; height:100%; object-fit:cover">
+      <div style="padding:18px">
+        <div class="eyebrow">Limited Drop</div>
+        <h3 id="modalTitle" style="margin:10px 0 6px">Product</h3>
+        <div id="modalPrice" class="price" style="margin-bottom:6px">₹—</div>
+        <p class="lead">Engineered for speed and comfort. Breathable upper with responsive foam. Size guide included.</p>
+        <div class="cta-row">
+          <button class="btn primary" onclick="modalCloseAndAdd()">Add to Cart</button>
+          <button class="btn" onclick="document.getElementById('modal').close()">Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- FLOATING CART -->
+  <button id="cartFab" class="pill" style="position:fixed; right:18px; bottom:18px; display:flex; gap:10px; align-items:center; z-index:70">
+    <span>Cart</span>
+    <span id="cartCount" style="background:#08101c; color:var(--text); padding:4px 8px; border-radius:999px; border:1px solid rgba(255,255,255,.1)">0</span>
+  </button>
+
+  <script>
+    // Smooth internal scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const to = document.querySelector(a.getAttribute('href'));
+        if(to){ e.preventDefault(); to.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    // Simple cart system (front-end only)
+    const cart = [];
+    const cartCount = document.getElementById('cartCount');
+
+    function addToCart(btn){
+      const card = btn.closest('.product');
+      const title = card.dataset.title;
+      const price = Number(card.dataset.price);
+      cart.push({title, price});
+      cartCount.textContent = cart.length;
+      btn.textContent = 'Added ✓';
+      setTimeout(()=> btn.textContent = 'Add to Cart', 900);
+    }
+
+    // Quick view modal
+    const modal = document.getElementById('modal');
+    let modalCtx = { card:null };
+
+    function quickView(btn){
+      const card = btn.closest('.product');
+      modalCtx.card = card;
+      const img = card.querySelector('img').src;
+      document.getElementById('modalImg').src = img;
+      document.getElementById('modalTitle').textContent = card.dataset.title;
+      document.getElementById('modalPrice').textContent = '₹' + Number(card.dataset.price).toLocaleString('en-IN');
+      modal.showModal();
+    }
+    function modalCloseAndAdd(){ addToCart(modalCtx.card.querySelector('.btn.primary')); modal.close(); }
+
+    // Form demo
+    function handleSubmit(e){
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      const status = document.getElementById('formStatus');
+      status.textContent = 'Saving…';
+      setTimeout(()=>{ status.textContent = `Welcome, ${data.name}! You\'re on the list.`; e.target.reset(); }, 700);
+    }
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
